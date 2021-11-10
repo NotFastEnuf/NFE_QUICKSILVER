@@ -1,8 +1,7 @@
-
 #include "config.h"
 #include "config_helper.h"
 
-#define IFLIGHTF411RX
+#define ZEUSF4EVO
 
 #define F4
 #define F411
@@ -10,18 +9,20 @@
 //PORTS
 #define SPI_PORTS   \
   SPI1_PA5PA6PA7    \
-  SPI2_PB13PB14PB15 \
-  SPI3_PB3PB4PB5
+  SPI2_PB13PB14PB15
 
 #define USART_PORTS \
   USART1_PA10PA9    \
   USART2_PA3PA2
 
+//#define USB_DETECT_PIN GPIO_Pin_15
+//#define USB_DETECT_PORT GPIOC
+
 //LEDS
 #define LED_NUMBER 1
 #define LED1PIN PIN_C13
-#define LED1_INVERT
-#define BUZZER_PIN PIN_C15
+
+#define BUZZER_PIN PIN_B2
 
 //#define FPV_PIN GPIO_Pin_13
 //#define FPV_PORT GPIOA
@@ -29,7 +30,7 @@
 //GYRO
 #define MPU6XXX_SPI_PORT SPI_PORT1
 #define MPU6XXX_NSS PIN_A4
-#define MPU6XXX_INT PIN_B10
+#define MPU6XXX_INT PIN_A1
 #define SENSOR_ROTATE_90_CCW
 #define GYRO_ID_1 0x68
 #define GYRO_ID_2 0x73
@@ -37,23 +38,21 @@
 #define GYRO_ID_4 0x71
 
 //RADIO
-#ifdef RX_FRSKY
-#define USE_CC2500
-#define USE_CC2500_PA_LNA
-#define USE_CC2500_DIVERSITY
-#define CC2500_SPI_PORT SPI_PORT3
-#define CC2500_NSS PIN_A15
-#define CC2500_GDO0_PIN PIN_C14
-#define CC2500_TX_EN_PIN PIN_A8
-#define CC2500_LNA_EN_PIN PIN_NONE
-#define CC2500_ANT_SEL_PIN PIN_NONE
-
-#define SOFTSPI_NONE
-#endif
-
 #ifdef SERIAL_RX
 #define RX_USART USART_PORT2
 #define SOFTSPI_NONE
+#endif
+
+#ifndef SOFTSPI_NONE
+#define RADIO_CHECK
+#define SPI_MISO_PIN GPIO_Pin_10
+#define SPI_MISO_PORT GPIOA
+#define SPI_MOSI_PIN GPIO_Pin_9
+#define SPI_MOSI_PORT GPIOA
+#define SPI_CLK_PIN GPIO_Pin_3
+#define SPI_CLK_PORT GPIOA
+#define SPI_SS_PIN GPIO_Pin_2
+#define SPI_SS_PORT GPIOA
 #endif
 
 // OSD
@@ -77,9 +76,8 @@
 #define ADC_REF_VOLTAGE 3.3
 #endif
 
-
 // MOTOR PINS
 #define MOTOR_PIN0 MOTOR_PIN_PB6
 #define MOTOR_PIN1 MOTOR_PIN_PB7
-#define MOTOR_PIN2 MOTOR_PIN_PA0
-#define MOTOR_PIN3 MOTOR_PIN_PA1
+#define MOTOR_PIN2 MOTOR_PIN_PB4
+#define MOTOR_PIN3 MOTOR_PIN_PB5
